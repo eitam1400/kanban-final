@@ -1,13 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./index.js" defer></script>
-    <link rel="stylesheet" href="./styles.css" />
-    <title>Tasks manager</title>
-</head>
-<body>
-</body>
+
+      <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <script src="./index.js" type="text/javascript" defer></script>
+            <link rel="stylesheet" href="./styles.css" />
+            <link href="//db.onlinewebfonts.com/c/a8b12ce70152aaccba3c207851da9132?family=Army" rel="stylesheet" type="text/css"/> 
+            <title id="page-title">Tasks Manager</title>
+      </head>
+            
+      <body>
+
+          <!----------------- (TODAY') CALENDAR ------------->
+
+          <div class="calendar">
+            <p id="monthName"></p>
+            <p id="dayName"></p>
+            <p id="dayNumber"></p>
+            <p id="year"></p>
+            <p id="clock" style="color:red; margin-left: 16%;"></p>
+         </div>
+
+         <script defer>
+
+            const lang = window.navigator.language;
+            let date = new Date();
+
+            let dateNumer = date.getDate();
+            let month = date.getMonth();
+            let dayName = date.toLocaleString(lang, {weekday: 'long'});
+            let monthName = date.toLocaleString(lang, {month: 'long'});
+            let year = date.getFullYear();
+
+
+            document.getElementById('monthName').innerText = monthName;
+            document.getElementById('dayName').innerText = dayName;
+            document.getElementById('dayNumber').innerText = dateNumer;
+            document.getElementById('year').innerText = year;
+
+            setInterval( () => { 
+               date = new Date(); //update date to current date
+               let clock = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`; //clock build
+               document.getElementById('clock').innerText = clock; }, 0 ); //update clock every second
+            
+
+         </script>
+
+         <style>
+
+             *
+            {
+               box-sizing: border-box;
+               font-family:OCR A Std, monospace,Army ;
+            } 
+
+            .calendar
+            {
+               position: fixed; 
+               z-index: 1;
+               letter-spacing: 10px;
+               margin-left: 0;
+               margin-top: 25%;
+            }
+
+            .calendar #monthName
+            {
+               position: relative;
+               padding: 5px 10px;
+               background: #ff5331;
+               color:#fff;
+               font-size: 30px;
+               font-weight: 700;
+               margin-left: 25%;
+            }
+
+            .calendar #dayName
+            {
+               margin-top: 20px;
+               font-size: 20px;
+               font-weight: 300;
+               color:#999;
+               margin-left: 21%;
+            }
+
+            .calendar #dayNumber
+            {
+               margin-top: 0px;
+               line-height: 1em;
+               font-size: 80px;
+               font-weight: 700;
+               color:#333;
+               margin-left: 21%;
+               margin-bottom: 10%;
+            }
+
+            .calendar #year
+            {
+               font-size: 20px;
+               font-weight: 500;
+               color:#999;
+               margin-left: 21%;
+               margin-top: 0;
+            }
+
+
+         </style>
+
+<!------- !* END OF CALENDAR *! -------->
+
+         <h1 id="h1">Task Manager 💌</h1>
+
+         <!-- Theme Changer !-->
+         <input type="checkbox" id="themeSwitch" name="theme-switch" class="theme-switch__input"/>
+         <label for="themeSwitch" class="theme-switch__label">
+            <span>Switch theme</span>
+         </label>
+
+
+         <main id="main">
+            <!-- Search Area !-->
+         <span id="search-bar-text">Search:</span>
+         <input id="search" placeholder="Search for tasks..." value="" required></input>
+
+         
+         <button id="load" style="float:left;margin-top: 5%;">Load</button>
+         <button id="save" style="float:left;margin-top: 5%;">Save</button> 
+         <!-- To Do Tasks Section!-->
+            
+         <fieldset id="lists-feildset">
+
+            <legend id="lists-field-title">To Do...Doing...Done</legend>
+
+            <h3>To Do Tasks</h3>
+            
+            <section id="to-do-tasks-section">
+
+               <div class="list-input-inserter">
+                  <input type="text" id="add-to-do-task" placeholder="Insert a To-Do task" value="">
+
+                  <button id="submit-add-to-do" type="submit">Add</button>
+               </div>
+               
+
+               <ul id="todo-tasks" class="draggable-list" name="todo"></ul>
+               
+               
+
+            </section>
+
+
+            <!-- In Progress Tasks Section!-->
+
+            <h3>In Progress... Tasks</h3>
+
+            <section id="in-progress-tasks-section">
+
+               <div class="list-input-inserter"> 
+                  <input type="text" id="add-in-progress-task" placeholder="Insert an In-Progress...task" value="">
+               
+                  <button id="submit-add-in-progress" type="submit">Add</button>
+               </div>
+
+               <ul id="in-progress-tasks" class="draggable-list"></ul>
+               
+               <div class="mountain" style="pointer-events: none;">
+                  <div class="mountain-cap-1" style="pointer-events: none;"></div>
+                  <div class="mountain-cap-2" style="pointer-events: none;"></div>
+                  <div class="mountain-cap-3" style="pointer-events: none;"></div>
+                  </div>
+               </div>
+               <div class="mountain-two" style="pointer-events: none;">
+                  <div class="mountain-top" style="pointer-events: none;">
+                  <div class="mountain-cap-1" style="pointer-events: none;"></div>
+                  <div class="mountain-cap-2" style="pointer-events: none;"></div>
+                  <div class="mountain-cap-3" style="pointer-events: none;"></div>
+                  </div>
+               </div>
+               <div class="mountain-three" style="pointer-events: none;">
+                  <div class="mountain-top" style="pointer-events: none;">
+                  <div class="mountain-cap-1" style="pointer-events: none;"></div>
+                  <div class="mountain-cap-2" style="pointer-events: none;"></div>
+                  <div class="mountain-cap-3" style="pointer-events: none;"></div>
+                  </div>
+               </div>
+               <div class="cloud"></div>
+
+            </section>
+
+
+            <!-- Done Tasks Section!-->
+
+            <h3>Done Tasks</h3>
+
+            <section id="done-tasks-section">
+
+               <div class="list-input-inserter">
+                  <input type="text" id="add-done-task" placeholder="Insert a Done task" value="">
+               
+                  <button id="submit-add-done" type="submit">Add</button>
+               </div>
+
+               <ul id="done-tasks" class="draggable-list"></ul>
+               
+
+            </section>
+
+
+            <div class="comment">*Click on a task 4 times to remove it</div>
+
+            <button id="delete-all-tasks" style="background-color:red">Delete all tasks</button>
+
+         <script src="anime.min.js"></script>
+         <script>
+            const h1 = document.getElementById('todo-tasks');
+
+            for(let i=0; i<=50; i++) {
+               const blocks = document.createElement('div');
+               blocks.classList.add('block');
+               h1.appendChild(blocks);
+            }
+
+            function animateBlocks()
+            {
+               anime({
+                  targets: '.block',
+                  translateX: () => {
+                     return anime.random(-10,300)
+                  },
+                  translateY: () => {
+                     return anime.random(-2,500);
+                  },
+
+                  scale: () => {
+                     return anime.random(1,2)
+                  }
+               })
+            }
+
+            animateBlocks();
+         </script>
+            
+      </fieldset>
+      
+
+         </main>
+
+
+    </body>
+
+    <footer>eitam1400&copy; 2021&reg Github Co</footer>
+
 </html>
